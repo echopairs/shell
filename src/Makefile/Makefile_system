@@ -1,0 +1,51 @@
+## 环境监测
+PROTOC = protoc
+GRPC_CPP_PLUGIN = grpc_cpp_plugin
+GRPC_JAVA_PLUGIN = grpc_java_plugin
+GRPC_NODE_PLUGIN = grpc_node_plugin
+
+
+all: system_check
+	$(info --system_check is ok--)
+
+PROTOC_CHECK_CMD = which $(PROTOC)
+CPP_PLUGIN_CHECK_CMD = which $(GRPC_CPP_PLUGIN)
+JAVA_PLUGIN_CHECK_CMD = which $(GRPC_JAVA_PLUGIN)
+NODE_PLUGIN_CHECK_CMD = which $(GRPC_NODE_PLUGIN)
+
+
+HAS_PROTOC = $(shell $(PROTOC_CHECK_CMD)  > /dev/null && echo true || echo false)
+HAS_CPP_PLUGIN = $(shell $(CPP_PLUGIN_CHECK_CMD)  > /dev/null && echo true || echo false)
+HAS_JAVA_PLUGIN = $(shell $(JAVA_PLUGIN_CHECK_CMD) > /dev/null && echo true || echo false)
+HAS_NODE_PLUGIN = $(shell $(NODE_PLUGIN_CHECK_CMD) > /dev/null && echo true || echo false)
+
+ifeq ($(HAS_PROTOC),true)
+$(info --check protoc is ok)
+else
+$(warning $(HAS_PROTOC))
+$(error --check protoc is fail, please init protoc)
+endif
+
+
+ifeq ($(HAS_CPP_PLUGIN),true)
+$(info --check grpc_cpp_plugin is ok)
+else
+$(error --check grpc_cpp_plugin is fail, please init grpc_cpp_plugin)
+endif
+
+
+ifeq ($(HAS_JAVA_PLUGIN),true)
+$(info --check grpc_java_plugin is ok)
+else
+$(info --check grpc_java_plugin is fail, please init $(GRPC_JAVA_PLUGIN))
+endif
+
+
+ifeq ($(HAS_NODE_PLUGIN),true)
+$(info --check grpc_node_plugin is ok)
+else
+$(error --check grpc_node_plugin is fail, please init grpc_node_plugin)
+endif
+
+system_check:
+	$(info, --system_check ok)
