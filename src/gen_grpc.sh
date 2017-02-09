@@ -19,7 +19,7 @@ git submodule update --init
 make -j 2 || (echo "init grpc failed") || exit 2
 sudo checkinstall -D --install=no --fstrans=no --default --pkgname=grpc --pkgversion=1.0.0 --pakdir=$route || exit 3
 # init protobuf
-cd thrid_party/protobuf
+cd third_party/protobuf
 autoreconf -f -i -Wall,no-obsolete
 ./configure
 make -j 2 || exit 4
